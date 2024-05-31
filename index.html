@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashTap</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="quantity">
+        <p class="ttl">Button Quantity</p>
+        <div class="quantity_input">
+            <input type="number" value="2" readonly class="quantity_val">
+
+            <div class="quantity_up">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-554 283-357l-43-43 240-240 240 240-43 43-197-197Z"/></svg>
+            </div>
+            <div class="quantity_down">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-344 240-584l43-43 197 197 197-197 43 43-240 240Z"/></svg>
+            </div>
+        </div>
+        <p class="notice">Min: 1, Max: 10</p>
+    </div>
+
+    <div class="buttons">
+        
+        <div class="btn1 show" data-name="Player-1"></div>
+        <div class="btn2 show" data-name="Player-2"></div>
+        <div class="btn3" data-name="Player-3"></div>
+        <div class="btn4" data-name="Player-4"></div>
+        <div class="btn5" data-name="Player-5"></div>
+        <div class="btn6" data-name="Player-6"></div>
+        <div class="btn7" data-name="Player-7"></div>
+        <div class="btn8" data-name="Player-8"></div>
+        <div class="btn9" data-name="Player-9"></div>
+        <div class="btn10" data-name="Player-10"></div>
+
+    </div>
+
+    <div class="popup">
+        <div class="bg"></div>
+        <div class="pressed">
+            <p class="ttl">Pressed the Button!</p>
+            <p class="pressed_who">阿笠博士</p>
+            <div class="result"><p class="pressed_ok">OK</p></div>
+        </div>
+        <div class="rename">
+            <p class="ttl">Rename the Button!</p>
+            <input type="text" class="rename_input">
+            <div class="result">
+                <p class="rename_cancel">Cancel</p>
+                <p class="rename_ok">OK</p>
+            </div>
+            <p class="rename_notice">12 Characters or Less.</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+
+            //Quantity
+            function updateQuantity(quantity_change) {
+                let quantityVal = parseInt($('.quantity_val').val());
+                let newQuantity = quantityVal + quantity_change;
+
+                if (newQuantity >= 1 && newQuantity <= 10) {
+                    $('.quantity_val').val(newQuantity);
+                }
+            }
+            function updateButtons() {
+                var showBtns = parseInt($('.quantity_val').val());
+                $('.btn').removeClass('show');
+                for (var i = 1; i <= showBtns; i++) {
+                    $('.btn' + i).addClass('show');
+                }
+                for (var j = showBtns + 1; j <= 10; j++) {
+                    $('.btn' + j).removeClass('show');
+                }
+            }
+
+            $('.quantity_up, .quantity_down').click(function() {
+                var increment = $(this).hasClass('quantity_up') ? 1 : -1;
+                updateQuantity(increment);
+                updateButtons();
+            });
+
+            setInterval(() => {
+            }, 1);
+
+            //ボタン
+            $('[class*=btn]').on('click', function() {
+                $(this).addClass('clicked');
+                $('[class*=btn]:not(.clicked)').css('background-color', '#aaa');
+                $('.pressed, .bg').addClass('active');
+                let pressed_name = $(this).data('name');
+                $('.pressed_who').text(pressed_name);
+            })
+            $('[class*=btn]').on('contextmenu', function() {
+                $(this).addClass('rename_marker');
+                $('.rename, .bg').addClass('active');
+                $('.rename_input').val('').focus()
+                return false;
+            })
+
+
+            //ポップアップ
+            $('.pressed_ok').click(function() {
+                $('[class*=btn]').removeClass('clicked');
+                $('[class*=btn]:not(.clicked)').css('background-color', '#f44');
+                $('.pressed, .bg').removeClass('active');
+            })
+            $('.rename_ok').click(function() {
+                if ($('.rename_input').val() === '') {
+                    $('.rename_notice').text('Enter at Least One Character.');
+                    $('.rename_notice').css({
+                        'scale': '1.5',
+                        'color': '#f00'
+                    });
+                    $('.rename_input').focus()
+                } else {
+                    let rename_val = $('.rename_input').val();
+                    $('.rename_marker').data('name', rename_val);
+                    $('.rename_marker').removeClass('rename_marker');
+                    $('.rename, .bg').removeClass('active');
+                }
+            })
+            $('.rename_cancel').click(function() {
+                $('.rename_marker').removeClass('rename_marker');
+                $('.rename, .bg').removeClass('active');
+            })
+
+            //
+            $('.rename_input').on('input', function(){
+                if($(this).val().length > 12){
+                    $('.rename_notice').css({
+                        'scale': '1.5',
+                        'color': '#f00'
+                    });
+                    $(this).val($(this).val().slice(0, -1));
+
+                    setTimeout(() => {
+                        $('.rename_notice').css({
+                            'scale': '1',
+                            'color': '#777'
+                        });
+                    }, 2000);
+                }
+            });
+        })
+    </script>
+</body>
+</html>

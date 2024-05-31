@@ -1,0 +1,272 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto+Mono:wght@500&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: #000;
+  overflow: hidden;
+  border-radius: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+html {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100vw;
+  height: 100dvh;
+  background-color: #fff;
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  background-color: #bbb;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #222;
+}
+
+.quantity {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 30vw;
+  height: 10vh;
+  margin-top: 1rem;
+  margin-inline: auto;
+  border: 1px solid #777;
+}
+.quantity p.ttl {
+  font-size: 1.1rem;
+  font-family: "poppins", sans-serif;
+  font-weight: 400;
+  color: #444;
+}
+.quantity .quantity_input {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  position: relative;
+  width: 4rem;
+  height: 32px;
+}
+.quantity .quantity_input input {
+  font-size: 1.1rem;
+  font-family: "roboto mono", sans-serif;
+  font-weight: 400;
+  width: 4rem;
+  height: 31px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #77a;
+  color: #77a;
+  padding-inline: 0.5em;
+}
+.quantity .quantity_input .quantity_up, .quantity .quantity_input .quantity_down {
+  position: absolute;
+  right: 0;
+  display: grid;
+  place-items: center;
+  z-index: 99;
+  width: 16px;
+  height: 15.5px;
+  background-color: #77a;
+  cursor: pointer;
+}
+.quantity .quantity_input .quantity_up svg, .quantity .quantity_input .quantity_down svg {
+  position: absolute;
+  display: block;
+  width: 20px;
+  fill: #fff;
+}
+.quantity .quantity_input .quantity_up.quantity_up, .quantity .quantity_input .quantity_down.quantity_up {
+  top: 0;
+}
+.quantity .quantity_input .quantity_up.quantity_down, .quantity .quantity_input .quantity_down.quantity_down {
+  bottom: 0;
+}
+.quantity p.notice {
+  position: absolute;
+  bottom: 0;
+  right: 5px;
+  font-size: 0.8rem;
+  font-family: "poppins", sans-serif;
+  font-weight: 400;
+  color: #777;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  gap: 70px;
+  padding: 10px;
+}
+.buttons [class*=btn] {
+  display: none;
+  position: relative;
+  width: 200px;
+  aspect-ratio: 1/1;
+  background-color: #f44;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.3), inset 10px 10px 20px rgba(255, 255, 255, 0.3), 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+.buttons [class*=btn]:active {
+  box-shadow: inset 10px 10px 20px rgba(0, 0, 0, 0.5), inset -10px -10px 20px rgba(255, 255, 255, 0.2), 0 2px 4px rgba(0, 0, 0, 0.6);
+  transform: translateY(2px);
+}
+.buttons [class*=btn].show {
+  display: block;
+}
+
+.popup {
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+}
+.popup .bg {
+  opacity: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5333333333);
+}
+.popup .bg.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.popup .pressed, .popup .rename {
+  opacity: 0;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  place-content: center;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background-color: #fff;
+  border-radius: 1rem;
+}
+.popup .pressed.active, .popup .rename.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.popup .pressed p.ttl, .popup .rename p.ttl {
+  position: absolute;
+  top: 30px;
+  font-size: 1.7rem;
+  color: #77a;
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
+}
+.popup .pressed p.pressed_who, .popup .rename p.pressed_who {
+  font-size: 3rem;
+  color: #fff;
+  background-color: #f44;
+  font-family: "poppins", "zen kaku gothic new", sans-serif;
+  padding-inline: 0.8em;
+  font-weight: 700;
+}
+.popup .pressed input.rename_input, .popup .rename input.rename_input {
+  width: 85%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #f44;
+  font-size: 2rem;
+  padding-inline: 0.8em;
+  font-family: "poppins", "zen kaku gothic new", sans-serif;
+  font-weight: 700;
+}
+.popup .pressed p.rename_notice, .popup .rename p.rename_notice {
+  font-size: 0.9rem;
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
+  color: #777;
+  margin-top: 0.5rem;
+}
+.popup .pressed .result, .popup .rename .result {
+  position: absolute;
+  bottom: 30px;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup .pressed .result p.pressed_ok, .popup .pressed .result p.rename_ok, .popup .pressed .result p.rename_cancel, .popup .rename .result p.pressed_ok, .popup .rename .result p.rename_ok, .popup .rename .result p.rename_cancel {
+  position: relative;
+  font-family: "poppins", sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: #4a4;
+  border: 1px solid #4a4;
+  width: 10rem;
+  text-align: center;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.2s ease-out;
+}
+.popup .pressed .result p.pressed_ok::after, .popup .pressed .result p.rename_ok::after, .popup .pressed .result p.rename_cancel::after, .popup .rename .result p.pressed_ok::after, .popup .rename .result p.rename_ok::after, .popup .rename .result p.rename_cancel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #4a4;
+  z-index: -1;
+  translate: -101%;
+  transition: all 0.2s ease-out;
+}
+.popup .pressed .result p.pressed_ok:hover, .popup .pressed .result p.rename_ok:hover, .popup .pressed .result p.rename_cancel:hover, .popup .rename .result p.pressed_ok:hover, .popup .rename .result p.rename_ok:hover, .popup .rename .result p.rename_cancel:hover {
+  color: #fff;
+}
+.popup .pressed .result p.pressed_ok:hover::after, .popup .pressed .result p.rename_ok:hover::after, .popup .pressed .result p.rename_cancel:hover::after, .popup .rename .result p.pressed_ok:hover::after, .popup .rename .result p.rename_ok:hover::after, .popup .rename .result p.rename_cancel:hover::after {
+  translate: 0;
+}
+
+@media (max-width: 720px) {
+  .quantity {
+    width: 90vw;
+  }
+  .quantity .quantity_input {
+    height: 48px;
+  }
+  .quantity .quantity_input input {
+    height: 47px;
+  }
+  .quantity .quantity_input .quantity_up, .quantity .quantity_input .quantity_down {
+    width: 24px;
+    height: 23.5px;
+  }
+  .buttons {
+    gap: 20px;
+  }
+  .buttons [class*=btn] {
+    width: 180px !important;
+  }
+  .popup .pressed {
+    width: 80% !important;
+  }
+}/*# sourceMappingURL=style.css.map */
