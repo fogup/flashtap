@@ -17,6 +17,8 @@ html {
 }
 
 body {
+  display: grid;
+  place-items: center;
   width: 100vw;
   height: 100dvh;
   background-color: #fff;
@@ -37,17 +39,34 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: #222;
 }
 
+a.link {
+  display: block;
+  width: 80px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+a.link svg {
+  width: 80px;
+  fill: #000;
+}
+
 .quantity {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  z-index: 99;
   width: 30vw;
   height: 10vh;
-  margin-top: 1rem;
-  margin-inline: auto;
   border: 1px solid #777;
+  translate: 0 -1px;
+  background-color: #fff;
 }
 .quantity p.ttl {
   font-size: 1.1rem;
@@ -102,10 +121,31 @@ body::-webkit-scrollbar-thumb:hover {
   position: absolute;
   bottom: 0;
   right: 5px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-family: "poppins", sans-serif;
   font-weight: 400;
   color: #777;
+}
+
+.quantity_close {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  top: 10vh;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 12px;
+  cursor: pointer;
+  background-color: #777;
+  border-radius: 0 0 5px 5px;
+  z-index: 999;
+}
+.quantity_close svg {
+  position: absolute;
+  width: 110%;
+  fill: #fff;
 }
 
 .buttons {
@@ -113,7 +153,7 @@ body::-webkit-scrollbar-thumb:hover {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  margin-top: calc(4rem + 10vh);
   gap: 70px;
   padding: 10px;
 }
@@ -201,8 +241,8 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .popup .pressed p.rename_notice, .popup .rename p.rename_notice {
   font-size: 0.9rem;
-  font-family: "poppins", sans-serif;
-  font-weight: 500;
+  font-family: "poppins", "zen kaku gothic new", sans-serif;
+  font-weight: 700;
   color: #777;
   margin-top: 0.5rem;
 }
@@ -246,6 +286,15 @@ body::-webkit-scrollbar-thumb:hover {
   translate: 0;
 }
 
+.moveup {
+  translate: 0 calc(-10vh - 2px);
+  transition: all 0.2s ease-out;
+}
+
+.moveup_rotate {
+  rotate: 180deg;
+}
+
 @media (max-width: 720px) {
   .quantity {
     width: 90vw;
@@ -264,7 +313,7 @@ body::-webkit-scrollbar-thumb:hover {
     gap: 20px;
   }
   .buttons [class*=btn] {
-    width: 180px !important;
+    width: 150px !important;
   }
   .popup .pressed {
     width: 80% !important;
